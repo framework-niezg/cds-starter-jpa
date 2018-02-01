@@ -1,6 +1,7 @@
 package com.zjcds.common.jpa.utils;
 
 import com.zjcds.common.base.domain.page.Paging;
+import com.zjcds.common.dozer.BeanPropertyCopyUtils;
 import com.zjcds.common.dozer.DozerConfiguration;
 import com.zjcds.common.jpa.PageResult;
 import org.apache.commons.collections.CollectionUtils;
@@ -97,8 +98,8 @@ public abstract class PageUtils {
         PageResult<T> ret = null;
         if(source != null){
             ret = new PageResult<>();
-            DozerConfiguration.BeanCopyUtils.copy(source,ret);
-            ret.setContent(DozerConfiguration.BeanCopyUtils.copy(source.getContent(), targetClass));
+            BeanPropertyCopyUtils.copy(source,ret);
+            ret.setContent(BeanPropertyCopyUtils.copy(source.getContent(), targetClass));
         }
         return ret;
     }
