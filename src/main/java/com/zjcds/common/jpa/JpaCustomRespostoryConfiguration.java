@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,8 +23,8 @@ import java.lang.reflect.Method;
 @EnableAspectJAutoProxy
 @Aspect
 @Configuration
-//@EnableJpaRepositories(basePackages={"com.zjcds.dp.cdm.dao.jpa"},repositoryBaseClass= CustomRepostoryImpl.class)
 @EnableJpaRepositories(basePackages={"com.zjcds"},repositoryBaseClass= CustomRepostoryImpl.class)
+@EntityScan("com.zjcds")
 public class JpaCustomRespostoryConfiguration {
 
     @Pointcut("execution(* com.zjcds..*(..)) && @annotation(com.zjcds.common.jpa.annotation.NearestEntityGraph)")
