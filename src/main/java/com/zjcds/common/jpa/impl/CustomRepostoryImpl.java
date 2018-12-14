@@ -345,6 +345,20 @@ public class CustomRepostoryImpl<T, ID extends Serializable> extends SimpleJpaRe
                 return cb.lessThanOrEqualTo(path,parameterExpression);
             }
         },
+        //为空
+        IsNull(querySurroundChar+"isnull"+querySurroundChar){
+            @Override
+            public Predicate toPredicate(Path path, ParameterExpression parameterExpression, CriteriaBuilder cb) {
+                return cb.isNull(parameterExpression);
+            }
+        },
+        //不为空
+        IsNotNull(querySurroundChar+"isnotnull"+querySurroundChar){
+            @Override
+            public Predicate toPredicate(Path path, ParameterExpression parameterExpression, CriteriaBuilder cb) {
+                return cb.isNotNull(parameterExpression);
+            }
+        },
         //like匹配
         Like(querySurroundChar+"like"+querySurroundChar){
             @Override
