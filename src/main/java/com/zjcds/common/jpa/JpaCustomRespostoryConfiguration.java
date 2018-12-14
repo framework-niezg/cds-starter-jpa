@@ -23,8 +23,6 @@ import java.lang.reflect.Method;
 @EnableAspectJAutoProxy
 @Aspect
 @Configuration
-@EnableJpaRepositories(basePackages={"com.zjcds"},repositoryBaseClass= CustomRepostoryImpl.class)
-@EntityScan("com.zjcds")
 public class JpaCustomRespostoryConfiguration {
 
     @Pointcut("execution(* com.zjcds..*(..)) && @annotation(com.zjcds.common.jpa.annotation.NearestEntityGraph)")
