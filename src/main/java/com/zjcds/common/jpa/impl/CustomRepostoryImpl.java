@@ -164,7 +164,7 @@ public class CustomRepostoryImpl<T, ID extends Serializable> extends SimpleJpaRe
             String value = m.group(3);
             try {
                 Operator operator = Operator.parse(op);
-                return new QueryExpression(key,operator,value);
+                return new QueryExpression(key, operator,value);
             }
             catch (IllegalArgumentException e){
                 throw new IllegalArgumentException("传入的查询表达式"+queryString+"不合法！",e);
@@ -232,6 +232,8 @@ public class CustomRepostoryImpl<T, ID extends Serializable> extends SimpleJpaRe
                     valueList.add(parseParamValue(strValue,cls));
                 }
                 paramValue = valueList;
+            } else if(op==Operator.IsNull||op==Operator.IsNotNull){
+                return;
             }
             else {
                 paramValue = parseParamValue(value,cls);
@@ -274,8 +276,14 @@ public class CustomRepostoryImpl<T, ID extends Serializable> extends SimpleJpaRe
             catch (IllegalArgumentException e){
                 throw new IllegalArgumentException(root.getModel().getName()+"中不存在"+key+"属性",e);
             }
-            ParameterExpression parameterExpression = cb.parameter(path.getJavaType(),paramValueKey);
-            return op.toPredicate(path,parameterExpression,cb);
+            if(op==Operator.IsNull){
+               return cb.isNull(path.as(path.getJavaType()));
+            }else if(op==Operator.IsNotNull){
+                return cb.isNotNull(path.as(path.getJavaType()));
+            }else {
+                ParameterExpression parameterExpression = cb.parameter(path.getJavaType(),paramValueKey);
+                return op.toPredicate(path,parameterExpression,cb);
+            }
         }
 
         @Override
